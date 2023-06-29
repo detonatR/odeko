@@ -9,10 +9,11 @@ class GraphqlController < ApplicationController
     query = params[:query]
     operation_name = params[:operationName]
     context = {
+      current_user: request.headers["X-USER"]
       # Query context goes here, for example:
       # current_user: current_user,
     }
-    result = FriendfaceSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = FriendSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?
